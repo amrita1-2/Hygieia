@@ -12,15 +12,23 @@
 
         // make sure mappings property is available
         ctrl.environmentsDropdownDisabled = true;
-        ctrl.environmentMappings = [
-            { key: 'dev', value: null },
-            { key: 'qa', value: null },
-            { key: 'int', value: null },
-            { key: 'perf', value: null },
-            { key: 'prod', value: null }
-        ];
+		//removed the hardcoding for environmentMappings
+       	// ctrl.environmentMappings = [
+         //  { key: 'dev', value: null },
+         //  { key: 'uat2', value: null },
+         //  { key: 'int', value: null },
+         //  { key: 'perf', value: null },
+         //  { key: 'prod', value: null }
+       // ];
+	//env mapping array 
+		ctrl.environmentMappings = [];
+	
 
         if(modalData.widgetConfig.options.mappings) {
+			//formig env mapping array 
+	    _(Object.keys(modalData.widgetConfig.options.mappings)).forEach(function(keyName) {
+	   	ctrl.environmentMappings.push({key: keyName,value: null});
+	     });
             _(ctrl.environmentMappings).forEach(function(env) {
                 if(modalData.widgetConfig.options.mappings[env.key]) {
                     env.value = modalData.widgetConfig.options.mappings[env.key];
@@ -29,7 +37,19 @@
         }
 
         ctrl.save = save;
+		//Add more environments functionality begins
+		ctrl.addServer = addServer;
+		//limited the number of environments can be added to 10
+		var maxEnvironment = 10;
 
+		function addServer() {
+		if(ctrl.environmentMappings.length === maxEnvironment) {
+			alert('Cannot add more than '+maxEnvironment+' environments');
+		} else {
+			ctrl.environmentMappings.push({key: '', value: null});
+		}
+		}
+		//Add more environments functionality ends
         deployData.details(modalData.dashboard.application.components[0].id).then(processResponse);
 
 

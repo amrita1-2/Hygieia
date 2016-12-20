@@ -1,11 +1,14 @@
 <widget-modal class="pipeline-config form-horizontal" widget-modal-title="Configure Delivery Pipeline">
-    <div class="text-center form-group">Map your environments to the following pipeline stages:</div>
 
+<form name="pipelineConfigForm" novalidate>
+    <div class="text-center form-group">Map your environments to the following pipeline stages:</div>
+    <div class="form-group row">
+   	<div class="col-sm-12"><button class="btn btn-primary" ng-click="pipelineConfig.addServer()">Add Environment</button></div>
+    </div>
     <div class="form-group clearfix" ng-repeat="map in pipelineConfig.environmentMappings">
         <div class="col-sm-3">
-            <label class="control-label pull-right">
-                {{map.key}}:
-            </label>
+	<!-- New input field with min length check  -->
+    <input type="text" class="control-label pull-right" ng-model="map.key" ng-minlength="1" ng-required="true"> 
         </div>
         <div class="col-sm-9">
             <select class="form-control"
@@ -18,6 +21,8 @@
     </div>
 
     <div class="button-row row text-center">
-        <button class="btn btn-primary" ng-click="pipelineConfig.save()">Save</button>
+	<!-- validating the checks before form submission -->
+    <button class="btn btn-primary" ng-click="pipelineConfig.save()" ng-disabled="pipelineConfigForm.$invalid">Save</button>
     </div>
+</form>
 </widget-modal>

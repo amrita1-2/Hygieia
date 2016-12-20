@@ -13,9 +13,11 @@
         // placeholder for environments that are not deployed or have a server down
         var currentDownEnvironments = [];
 
-        // list of valid environments to validate and build data
-        var validMappings = ['dev', 'qa', 'int', 'perf', 'prod'];
-
+        // valid environments to validate and build        
+		//removed the hardcode list of environments
+		//var validMappings = ['dev','uat2','int','perf','prod'];
+	
+		var validMappings = Object.keys($scope.widgetConfig.options.mappings);
         ctrl.load = function() {
             // verify that a valid mapping exists
             var configLength = (function(map) {
